@@ -26,6 +26,21 @@ app.get("/api/contacts",function(req,res) {
 	})
 })
 
+app.post("/api/contacts",function(req,res) {
+	let contact = new contactModel({
+		name:req.body.name,
+		lastname:req.body.lastname,
+		email:req.body.email,
+		phone:req.body.phone
+	})
+	contact.save().then(function() {
+		return res.status(201).json({"Message":"Created"})
+	}).catch(function(err) {
+		console.log("Failed to create a new contact. Reason",err);
+		return res.status(500).json({"Message":"Internal Server Error"});
+	});
+})
+
 app.listen(3000);
 
 console.log("Running in port 3000");

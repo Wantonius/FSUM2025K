@@ -41,6 +41,30 @@ app.post("/api/contacts",function(req,res) {
 	});
 })
 
+app.delete("/api/contacts/:id",function(req,res) {
+	contactModel.deleteOne({"_id":req.params.id}).then(function() {
+		return res.status(200).json({"Message":"Success"});
+	}).catch(function(err) {
+		console.log("Failed to remove contact. Reason",err);
+		return res.status(500).json({"Message":"Internal Server Error"});
+	})
+})
+
+app.put("/api/contacts/:id",function(req,res) {
+	let contact = {
+		name:req.body.name,
+		lastname:req.body.lastname,
+		email:req.body.email,
+		phone:req.body.phone
+	}
+	contactModel.replaceOne({"_id":req.params.id},contact).then(function() {
+		return res.status(200).json({"Message":"Success"});
+	}).catch(function(err) {
+		console.log("Failed to replace contact. Reason",err);
+		return res.status(500).json({"Message":"Internal Server Error"});
+	})
+})
+
 app.listen(3000);
 
 console.log("Running in port 3000");

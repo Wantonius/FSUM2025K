@@ -2,6 +2,7 @@ var mode = "";
 
 window.onload = function() {
 	createForm();
+	getContacts();
 }
 
 createForm = () => {
@@ -104,7 +105,7 @@ addContact = async () => {
 		mode = "";
 		let submitButton = document.getElementById("submitbutton");
 		submitButton.value = "Add";
-		//getContacts()
+		getContacts()
 	} else {
 		console.log("Server responded with a status "+response.status+" "+response.statusText);
 	}
@@ -148,3 +149,91 @@ editItem = (contact) => {
 	const submitButton = document.getElementById("submitbutton");
 	submitButton.value = "Save";
 }	
+
+populateTable = (list) => {
+	const root = document.getElementById("root");
+	const oldTable = document.getElementById("table");
+	if(oldTable) {
+		root.removeChild(oldTable);
+	}
+	const table = document.createElement("table");
+	table.setAttribute("class","table table-striped");
+	table.setAttribute("id","table");
+
+	//table headers
+	const header = document.createElement("thead");
+	const headerRow = document.createElement("tr");
+	
+	//name header
+	const nameHeader = document.createElement("th");
+	const nameLabel = document.createTextNode("Name");
+	nameHeader.appendChild(nameLabel);
+	
+	//lastname header
+	const lastNameHeader = document.createElement("th");
+	const lastNameLabel = document.createTextNode("Last Name");
+	lastNameHeader.appendChild(lastNameLabel);
+	
+	//email header
+	const emailHeader = document.createElement("th");
+	const emailLabel = document.createTextNode("Email");
+	emailHeader.appendChild(emailLabel);
+	
+	//phone header
+	const phoneHeader = document.createElement("th");
+	const phoneLabel = document.createTextNode("Phone");
+	phoneHeader.appendChild(phoneLabel);
+	
+	//remove header
+	const removeHeader = document.createElement("th");
+	const removeLabel = document.createTextNode("Remove");
+	removeHeader.appendChild(removeLabel);
+	
+	//edit header
+	const editHeader = document.createElement("th");
+	const editLabel = document.createTextNode("Edit");
+	editHeader.appendChild(editLabel);
+	
+	headerRow.append(nameHeader,lastNameHeader,emailHeader,phoneHeader,removeHeader,editHeader);
+	header.appendChild(headerRow);
+	table.appendChild(header);
+	
+	//Table body
+	const body = document.createElement("tbody");
+	for(let i=0;i<list.length;i++) {
+		const row = document.createElement("tr");
+		for(x in list[i]) {
+			if(x === "_id" || x === "__v") {
+				continue;
+			}
+			const column = document.createElement("td");
+			const info = document.createTextNode(list[i][x]);
+			column.appendChild(info);
+			row.appendChild(column)
+		}
+		const removeColumn = document.createElement("td");
+		const removeButton = document.createElement("button");
+		removeButton.setAttribute("class","btn btn-danger");
+		const removeText = document.createTextNode("Remove");
+		removeButton.appendChild(removeText);
+		removeButton.addEventListener("click",function(event) {
+			removeItem(list[i]._id);
+		})
+		removeColumn.appendChild(removeButton);
+		
+		const editColumn = document.createElement("td");
+		const editButton = document.createElement("button");
+		editButton.setAttribute("class","btn btn-secondary");
+		const editText = document.createTextNode("Edit");
+		editButton.appendChild(editText);
+		editButton.addEventListener("click",function(event) {
+			editItem(list[i])
+		})
+		editColumn.appendChild(editButton);
+		
+		row.append(removeColumn,editColumn);
+		body.appendChild(row);
+	}
+	table.appendChild(body);
+	root.appendChild(table);
+}

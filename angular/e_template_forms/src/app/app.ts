@@ -1,12 +1,11 @@
 import { Component} from '@angular/core';
-import {Basket} from './basket.component';
+import {TemplateForm} from './components/templateform.component';
 
 @Component({
   selector: 'app-root',
-  imports: [Basket],
+  imports: [TemplateForm],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
- 
 }

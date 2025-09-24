@@ -8,7 +8,7 @@ import {AppMenu} from './menu.component';
   templateUrl: './app.html',
   styleUrl: './app.css',
   animations:[
-  trigger("slideInOut",{
+  trigger("slideInOut",[
 	  state("in",style({
 		  transform:'translate3d(0,0,0)'
 	  })),
@@ -17,7 +17,7 @@ import {AppMenu} from './menu.component';
 	  })),
 	  transition("in => out",animate("400ms ease-in-out")),
 	  transition("out => in",animate("400ms ease-in-out"))
-  })
+  ])
   ]
 })
 export class App {

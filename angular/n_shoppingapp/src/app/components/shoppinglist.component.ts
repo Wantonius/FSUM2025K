@@ -39,4 +39,19 @@ export class ShoppingList implements OnInit {
 			complete:() => console.log("done")
 		})
 	}
+	
+	removeItem(id:number) {
+		this.shopping.removeItem(id).subscribe({
+			next:(data) => this.getList(),
+			error:(error) => {
+				if(error.status === 403) {
+					this.login.setLoginState(false,"");
+					this.router.navigate(["/"]);
+				} else {
+					console.log(error);
+				}
+			},
+			complete:() => console.log("done")
+		})
+	}
 }

@@ -8,7 +8,7 @@ import {Router} from '@angular/router';
 	selector:"login-page",
 	standalone:true,
 	imports:[FormsModule],
-	templateUrl:"./loginpage.component.html"
+	templateUrl:"./loginpage.component.html",
 	styleUrl:"./loginpage.component.css"
 })
 export class LoginPage implements OnInit {

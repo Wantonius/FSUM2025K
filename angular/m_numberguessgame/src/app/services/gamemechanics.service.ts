@@ -24,13 +24,13 @@ export class GameMechanics {
 	
 	runGame(guess:number):WinCondition {
 		this.numberOfGuesses++;
-		if(guess < this.currentTarget) {
+		if(guess > this.currentTarget) {
 			return {
 				type:"high",
 				guesses:this.numberOfGuesses
 			}
 		}
-		if(guess > this.currentTarget {
+		if(guess < this.currentTarget) {
 			return {
 				type:"low",
 				guesses:this.numberOfGuesses
@@ -56,5 +56,19 @@ export class GameMechanics {
 			type:"",
 			guesses:0
 		}
+	}
+	
+	sortTopList(inputArray:any) {
+		let len = inputArray.length-1;
+		for(let i=0;i<len;i++) {
+			for(let j=0;j<len;j++) {
+				if(inputArray[j].score > inputArray[j+1].score) {
+					let tmp = inputArray[j];
+					inputArray[j] = inputArray[j+1];
+					inputArray[j+1] = tmp
+				}
+			}
+		}
+		return inputArray;
 	}
 }
